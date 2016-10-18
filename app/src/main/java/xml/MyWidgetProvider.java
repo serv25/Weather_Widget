@@ -30,7 +30,6 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private static final String BASE_URL = "http://api.openweathermap.org";
     private static final double DIFFERENCE_CELSIUS_TO_KELVIN = 273.15;
     private static final String PLUS = "+";
-    private static final String MINUS = "-";
     private static final String CELSIUS_MARK = "°C";
     private static String temperature = "Unknown";
     private static Retrofit retrofit;
