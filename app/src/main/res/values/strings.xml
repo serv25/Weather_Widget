@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Weather Widget</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="tv_city_name">Kiev</string>
+    <string name="btn_refresh">Refresh</string>
+</resources>
