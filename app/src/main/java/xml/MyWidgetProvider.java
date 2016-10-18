@@ -33,15 +33,15 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private static final String MINUS = "-";
     private static final String CELSIUS_MARK = "°C";
     private static String temperature = "Unknown";
+    private static Retrofit retrofit;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         int widgetId;
+        executeRequest();
 
         for (int i = 0; i < appWidgetIds.length; i++) {
-            executeRequest();
             widgetId = appWidgetIds[i];
-
 
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.my_widget_provider);
             remoteViews.setTextViewText(R.id.tv_temperature, temperature);
@@ -59,16 +59,18 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     private void executeRequest() {
 
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
+        if (retrofit == null) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(logging);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
-                .build();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+        }
 
         OpenWeatherMapService service = retrofit.create(OpenWeatherMapService.class);
 
@@ -82,13 +84,10 @@ public class MyWidgetProvider extends AppWidgetProvider {
                     double kelvinTemperature = response.body().getMain().getTemp();
                     int celsiusTemp = (int) (kelvinTemperature - DIFFERENCE_CELSIUS_TO_KELVIN);
 
-                    if (celsiusTemp == 0) {
-                        temperature = String.valueOf(celsiusTemp) + CELSIUS_MARK;
-                    } else if (kelvinTemperature < DIFFERENCE_CELSIUS_TO_KELVIN) {
-                        temperature = MINUS + String.valueOf(celsiusTemp) + CELSIUS_MARK;
-
-                    } else {
+                    if (kelvinTemperature > DIFFERENCE_CELSIUS_TO_KELVIN) {
                         temperature = PLUS + String.valueOf(celsiusTemp) + CELSIUS_MARK;
+                    } else {
+                        temperature = String.valueOf(celsiusTemp) + CELSIUS_MARK;
                     }
 
                 } else {

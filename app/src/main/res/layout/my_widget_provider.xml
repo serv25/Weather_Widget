@@ -1,28 +1,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/widget_margin"
-    android:background="#d3000000">
+    android:background="#d3000000"
+    android:orientation="horizontal"
+    android:padding="@dimen/widget_margin">
 
     <TextView
         android:id="@+id/tv_city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_margin="8dp"
+        android:layout_weight="1.3"
+        android:gravity="center_horizontal"
         android:text="@string/tv_city_name"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:textColor="#007b86"
+        android:textSize="26sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_temperature"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_margin="8dp"
-        android:text="+12"
+        android:layout_weight="1.2"
+        android:text="@string/tv_12_c"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
@@ -32,6 +33,6 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="@string/btn_refresh"/>
+        android:text="@string/btn_refresh" />
 
 </LinearLayout>
